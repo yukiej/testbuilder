@@ -40,11 +40,9 @@ var detectNetwork = function(cardNumber) {
   }
 
   //Discover: Check for prefix of 6011, 644-649, or 65, and a length of 16 or 19.
-  //if ([16,19].includes(numDigits) && [60, 64, 65].includes(startingDigits)){
- // 	if (cardNumber.slice(0,5) == 6011){
-
-  //	}
-  //}
+  if ([16,19].includes(numDigits) && (cardNumber.slice(0,4) == 6011 || (cardNumber.slice(0,3) >= 644 && cardNumber.slice(0,3) <= 649) || startingDigits == 65)){
+  	return 'Discover';
+  }
 
   //Maestro always has a prefix of 5018, 5020, 5038, or 6304, and a length of 12-19.
   if ((numDigits >= 12 && numDigits <= 19) && [5018, 5020, 5038, 6304].includes(Number(cardNumber.slice(0,4)))){
