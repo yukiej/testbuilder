@@ -345,6 +345,29 @@ describe('China UnionPay', function() {
     }
   }
 
+  //prefix 624-626, length of 16-19
+  for (var prefix = 624; prefix <= 626; prefix++) {
+    for (var numLength = 16; numLength <= 19; numLength++) {
+      (function(prefix, numLength) {    
+        it('has a prefix of ' + prefix + ' and a length of ' + numLength, function(){
+          var testCardNumber = prefix + '0'.repeat(numLength-prefix.toString().length);
+          expect(detectNetwork(testCardNumber)).to.equal('China UnionPay');
+        });    
+      })(prefix,numLength)
+    }
+  }
+
+  //prefix 6282-6288, length of 16-19
+  for (var prefix = 6282; prefix <= 6288; prefix++) {
+    for (var numLength = 16; numLength <= 19; numLength++) {
+      (function(prefix, numLength) {    
+        it('has a prefix of ' + prefix + ' and a length of ' + numLength, function(){
+          var testCardNumber = prefix + '0'.repeat(numLength-prefix.toString().length);
+          expect(detectNetwork(testCardNumber)).to.equal('China UnionPay');
+        });    
+      })(prefix,numLength)
+    }
+  }
 });
 
 //Switch always has a prefix of 4903, 4905, 4911, 4936, 564182, 633110, 6333, or 6759 and a length of 16, 18, or 19.
