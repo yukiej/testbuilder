@@ -371,6 +371,23 @@ describe('China UnionPay', function() {
 });
 
 //Switch always has a prefix of 4903, 4905, 4911, 4936, 564182, 633110, 6333, or 6759 and a length of 16, 18, or 19.
-//describe('Switch', function(){
+describe('Switch', function(){
+  var expect = chai.expect; 
+  var prefixArray = [4903, 4905, 4911, 4936, 564182, 633110, 6333, 6759];
+  var lengthArray = [16, 18, 19];
 
-//});
+  //Loop over all prefixes from prefixArray, for all lengths in lengthArray
+  for (var prefixIndex = 0; prefixIndex < prefixArray.length; prefixIndex++) {
+    for (var lengthIndex = 0; lengthIndex < lengthArray.length; lengthIndex++) {
+      var prefix = prefixArray[prefixIndex];
+      var numLength = lengthArray[lengthIndex];
+      (function(prefix, numLength) {    
+        it('has a prefix of ' + prefix + ' and a length of ' + numLength, function(){
+          var testCardNumber = prefix + '0'.repeat(numLength-prefix.toString().length);
+          expect(detectNetwork(testCardNumber)).to.equal('Switch');
+        });    
+      })(prefix,numLength)
+    }
+  }
+
+});
