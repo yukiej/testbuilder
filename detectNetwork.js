@@ -59,7 +59,7 @@ var detectNetwork = function(cardNumber) {
   }
 
   //Switch always has a prefix of 4903, 4905, 4911, 4936, 564182, 633110, 6333, or 6759 and a length of 16, 18, or 19
-  if ([16,18,19].includes(numDigits) && ([4903, 4905, 4911, 4936, 633, 6759].includes(Number(cardNumber.slice(0,4))) || [564182, 633110].includes(Number(cardNumber.slice(0,6))))){
+  if ([16,18,19].includes(numDigits) && ([4903, 4905, 4911, 4936, 6333, 6759].includes(Number(cardNumber.slice(0,4))) || [564182, 633110].includes(Number(cardNumber.slice(0,6))))){
   	return 'Switch';
   }
 }
