@@ -29,8 +29,12 @@ var detectNetwork = function(cardNumber) {
   	return 'American Express';
   }
 
-  //Visa: Check if numDigits is 13, 16, or 19 digits and card number starts with 4
+  //Visa: Check if numDigits is 13, 16, or 19 digits and card number starts with 4. 
+  //Exception: if length is 13 or 19 and prefix is 4903, 4905, 4911, 4936 then return Switch. 
   if ([13,16,19].includes(numDigits) && firstDigit == 4){
+  	if ([16,19].includes(numDigits) && [4903, 4905, 4911, 4936].includes(Number(cardNumber.slice(0,4)))){
+  		return 'Switch';
+  	}
   	return 'Visa';
   }
 
@@ -47,6 +51,16 @@ var detectNetwork = function(cardNumber) {
   //Maestro always has a prefix of 5018, 5020, 5038, or 6304, and a length of 12-19.
   if ((numDigits >= 12 && numDigits <= 19) && [5018, 5020, 5038, 6304].includes(Number(cardNumber.slice(0,4)))){
   	return 'Maestro';
+  }
+
+  //China UnionPay always has a prefix of 622126-622925, 624-626, or 6282-6288 and a length of 16-19
+   if ((numDigits >= 16 && numDigits <= 19) && (cardNumber.slice(0,6) >= 622126 && cardNumber.slice(0,6) <=622925 || (cardNumber.slice(0,3) >= 624 && cardNumber.slice(0,3) <= 626) || (cardNumber.slice(0,4) >= 6282 && cardNumber.slice(0,4) <= 6288))){
+  	return 'China UnionPay';
+  }
+
+  //Switch always has a prefix of 4903, 4905, 4911, 4936, 564182, 633110, 6333, or 6759 and a length of 16, 18, or 19
+  if ([16,18,19].includes(numDigits) && ([4903, 4905, 4911, 4936, 633, 6759].includes(Number(cardNumber.slice(0,4))) || [564182, 633110].includes(Number(cardNumber.slice(0,6))))){
+  	return 'Switch';
   }
 }
 
