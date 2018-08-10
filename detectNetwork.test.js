@@ -42,8 +42,6 @@ describe('Diner\'s Club', function() {
   // Be careful, tests can have bugs too...
 
   it('has a prefix of 38 and a length of 14', function() {
-//    throw new Error('Delete me!');
- 
     if (detectNetwork('38345678901234') !== 'Diner\'s Club') {
       throw new Error('Test failed');
     }
@@ -330,5 +328,26 @@ describe('Maestro', function() {
 
 });
 
-describe('should support China UnionPay')
-describe('should support Switch')
+
+//China UnionPay always has a prefix of 622126-622925, 624-626, or 6282-6288 and a length of 16-19.
+describe('China UnionPay', function() {
+  var expect = chai.expect;
+
+  //prefix 622126-622925, length of 16-19
+  for (var prefix = 622126; prefix <= 622925; prefix++) {
+    for (var numLength = 16; numLength <= 19; numLength++) {
+      (function(prefix, numLength) {    
+        it('has a prefix of ' + prefix + ' and a length of ' + numLength, function(){
+          var testCardNumber = prefix + '0'.repeat(numLength-prefix.toString().length);
+          expect(detectNetwork(testCardNumber)).to.equal('China UnionPay');
+        });    
+      })(prefix,numLength)
+    }
+  }
+
+});
+
+//Switch always has a prefix of 4903, 4905, 4911, 4936, 564182, 633110, 6333, or 6759 and a length of 16, 18, or 19.
+//describe('Switch', function(){
+
+//});
